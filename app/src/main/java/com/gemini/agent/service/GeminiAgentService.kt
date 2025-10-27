@@ -5,13 +5,16 @@ import android.accessibilityservice.GestureDescription
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.PixelFormat
 import android.graphics.Path
 import android.os.Handler
 import android.os.Looper
+import android.view.PixelCopy
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
 import androidx.core.content.ContextCompat.getSystemService
 import com.gemini.agent.client.GeminiClient
 import com.gemini.agent.models.UIAction
@@ -24,29 +27,24 @@ class GeminiAgentService : AccessibilityService() {
     private var isTaskRunning = false
     private var currentTask: String? = null
     private val handler = Handler(Looper.getMainLooper())
-    
+    private val binder = LocalBinder()
+
     private var screenWidth = 0
     private var screenHeight = 0
+
+    inner class LocalBinder : Binder() {
+        fun getService(): GeminiAgentService = this@GeminiAgentService
+    }
+
+    override fun onBind(intent: Intent): IBinder {
+        return binder
+    }
 
     companion object {
         private const val TAG = "GeminiAgentService"
         private const val EXTRA_TASK = "task"
         private const val ACTION_START_TASK = "START_TASK"
         private const val ACTION_STOP_TASK = "STOP_TASK"
-        
-        private var instance: GeminiAgentService? = null
-
-        fun startTask(context: Context, task: String) {
-            val intent = Intent(context, GeminiAgentService::class.java).apply {
-                action = ACTION_START_TASK
-                putExtra(EXTRA_TASK, task)
-            }
-            instance?.onStartCommand(intent, 0, 0)
-        }
-
-        fun stopTask(context: Context) {
-            instance?.stopCurrentTask()
-        }
     }
 
     override fun onCreate() {
@@ -102,7 +100,7 @@ class GeminiAgentService : AccessibilityService() {
         Log.d(TAG, "Screen: ${screenWidth}x${screenHeight}")
     }
 
-    private fun startAgentTask(task: String) {
+    fun startAgentTask(task: String, window: android.view.Window) {
         if (isTaskRunning) {
             Log.w(TAG, "Task already running")
             return
@@ -113,17 +111,17 @@ class GeminiAgentService : AccessibilityService() {
         Log.d(TAG, "Starting task: $task")
 
         scope.launch {
-            runAgentLoop(task)
+            runAgentLoop(task, window)
         }
     }
 
-    private fun stopCurrentTask() {
+    fun stopCurrentTask() {
         isTaskRunning = false
         currentTask = null
         Log.d(TAG, "Task stopped")
     }
 
-    private suspend fun runAgentLoop(task: String) {
+    private suspend fun runAgentLoop(task: String, window: android.view.Window) {
         var turnCount = 0
         val maxTurns = 10
 
@@ -133,7 +131,7 @@ class GeminiAgentService : AccessibilityService() {
                 Log.d(TAG, "Agent turn $turnCount")
 
                 // Capture screenshot
-                val screenshot = captureScreenshot()
+                val screenshot = captureScreenshot(window)
                 if (screenshot == null) {
                     Log.e(TAG, "Failed to capture screenshot")
                     delay(2000)
@@ -177,24 +175,24 @@ class GeminiAgentService : AccessibilityService() {
         }
     }
 
-    private suspend fun captureScreenshot(): Bitmap? = suspendCancellableCoroutine { continuation ->
-        takeScreenshot(
-            android.view.Display.DEFAULT_DISPLAY,
-            application.mainExecutor,
-            object : TakeScreenshotCallback {
-                override fun onSuccess(screenshot: ScreenshotResult) {
-                    val bitmap = Bitmap.wrapHardwareBuffer(
-                        screenshot.hardwareBuffer,
-                        screenshot.colorSpace
-                    )
-                    continuation.resume(bitmap, null)
-                }
+    private suspend fun captureScreenshot(window: android.view.Window): Bitmap? = suspendCancellableCoroutine { continuation ->
+        val bitmap = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.ARGB_8888)
+        val locationOfViewInWindow = IntArray(2)
+        window.decorView.getLocationInWindow(locationOfViewInWindow)
 
-                override fun onFailure(errorCode: Int) {
-                    Log.e(TAG, "Screenshot failed: $errorCode")
+        PixelCopy.request(
+            window,
+            android.graphics.Rect(0, 0, screenWidth, screenHeight),
+            bitmap,
+            { result ->
+                if (result == PixelCopy.SUCCESS) {
+                    continuation.resume(bitmap, null)
+                } else {
+                    Log.e(TAG, "Screenshot failed: $result")
                     continuation.resume(null, null)
                 }
-            }
+            },
+            handler
         )
     }
 
@@ -225,10 +223,21 @@ class GeminiAgentService : AccessibilityService() {
     }
 
     private fun performType(text: String): Boolean {
-        // Note: Typing requires focus on an input field
-        // This is simplified - real implementation would need to handle input properly
-        Log.d(TAG, "Type action: $text (not yet fully implemented)")
-        return true
+        val rootNode = rootInActiveWindow ?: return false
+        val focusedNode = findFocus(rootNode)
+
+        return if (focusedNode != null && focusedNode.isEditable) {
+            val arguments = Bundle()
+            arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
+            focusedNode.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+        } else {
+            Log.w(TAG, "No editable view focused for typing")
+            false
+        }
+    }
+
+    private fun findFocus(rootNode: AccessibilityNodeInfo): AccessibilityNodeInfo? {
+        return rootNode.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
     }
 
     private fun performScroll(direction: String): Boolean {

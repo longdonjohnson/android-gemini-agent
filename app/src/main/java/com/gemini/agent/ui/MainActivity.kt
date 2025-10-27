@@ -1,8 +1,11 @@
 package com.gemini.agent.ui
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.provider.Settings
 import android.widget.EditText
 import android.widget.Toast
@@ -14,9 +17,23 @@ import com.gemini.agent.service.GeminiAgentService
 import com.gemini.agent.utils.AccessibilityUtils
 
 class MainActivity : AppCompatActivity() {
-    
-    private lateinit in binding: ActivityMainBinding
+
+    private lateinit var binding: ActivityMainBinding
+    private var geminiAgentService: GeminiAgentService? = null
+    private var isBound = false
     private var isAgentRunning = false
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            val binder = service as GeminiAgentService.LocalBinder
+            geminiAgentService = binder.getService()
+            isBound = true
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            isBound = false
+        }
+    }
 
     companion object {
         private const val PREFS_NAME = "GeminiAgentPrefs"
@@ -31,6 +48,19 @@ class MainActivity : AppCompatActivity() {
         setupUI()
         checkApiKey()
         updateAccessibilityStatus()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Intent(this, GeminiAgentService::class.java).also { intent ->
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unbindService(connection)
+        isBound = false
     }
 
     override fun onResume() {
@@ -136,8 +166,10 @@ class MainActivity : AppCompatActivity() {
         binding.taskInput.isEnabled = false
 
         addLog("Starting agent with task: $task")
-        
-        GeminiAgentService.startTask(this, task)
+
+        if (isBound) {
+            geminiAgentService?.startAgentTask(task, window)
+        }
     }
 
     private fun stopAgent() {
@@ -148,8 +180,10 @@ class MainActivity : AppCompatActivity() {
         binding.taskInput.isEnabled = true
 
         addLog("Stopping agent")
-        
-        GeminiAgentService.stopTask(this)
+
+        if (isBound) {
+            geminiAgentService?.stopCurrentTask()
+        }
     }
 
     private fun openAccessibilitySettings() {
