@@ -32,7 +32,7 @@ jobs:
       run: ./gradlew assembleRelease --stacktrace
 
     - name: Sign APK (if keystore provided)
-      if: ${{ secrets.KEYSTORE_FILE != '' }}
+      if: secrets.KEYSTORE_FILE != ''
       run: |
         echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > keystore.jks
         jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
