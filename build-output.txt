@@ -1,0 +1,88 @@
+🔒 Wakelock acquired - device won't sleep during build
+[H[2J[3J════════════════════════════════════════════════════════
+  Building Gemini Agent APK
+════════════════════════════════════════════════════════
+
+[Build Starting] Preparing to build Gemini Agent...
+📦 Checking dependencies...
+[Build Started] Compiling APK... This may take 10-20 minutes
+
+✅ Dependencies OK
+
+🔨 Starting build...
+   First build: 10-20 minutes (downloading dependencies)
+   Subsequent builds: 2-5 minutes
+
+   Progress will show in notifications
+   Full log: build.log
+
+
+
+[Build Failed] Check build.log for details
+════════════════════════════════════════════════════════
+  ❌ BUILD FAILED
+════════════════════════════════════════════════════════
+
+Last 50 lines of build log:
+────────────────────────────────────────────────────────
+    	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
+    	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+    	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+    	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:45)
+    	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+    	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+    	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+    	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+    	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+    	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+    	at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+    	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
+    	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+    	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
+    	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+    	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+    	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+    	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+    	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+    	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+    	at java.base/java.lang.Thread.run(Thread.java:1583)
+    
+
+> Task :app:packageDebugResources
+> Task :app:generateDebugBuildConfig
+> Task :app:parseDebugLocalResources
+> Task :app:mapDebugSourceSetPaths
+> Task :app:checkDebugAarMetadata
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:processDebugMainManifest
+> Task :app:mergeDebugResources FAILED
+> Task :app:processDebugManifest
+
+[Incubating] Problems report is available at: file:///data/data/com.termux/files/home/android-gemini-agent/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:mergeDebugResources'.
+> /data/data/com.termux/files/home/android-gemini-agent/app/src/main/res/layout/activity_main.xml: Error: /data/data/com.termux/files/home/android-gemini-agent/app/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir/layout/activity_main.xml
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (Powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 27s
+13 actionable tasks: 11 executed, 2 up-to-date
+────────────────────────────────────────────────────────
+
+Full log: build.log
+
+Common issues:
+   • Network error: Check internet connection
+   • Out of memory: Close other apps
+   • Gradle cache: Try 'gradle clean'
+
+════════════════════════════════════════════════════════
+🔓 Wakelock released

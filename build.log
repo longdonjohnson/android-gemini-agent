@@ -1,0 +1,282 @@
+Starting a Gradle Daemon, 1 busy and 2 stopped Daemons could not be reused, use --status f
+> Configur
+> Configure project :app
+WARNING: The option setting 'android.aapt2FromMavenOverride=/data/data/com.termux/files/usr/bin/aapt2' is experimental.
+Declaring 'crunchPngs' as a property using an 'is-' method with a Boolean type on com.android.build.gradle.internal.dsl.BuildType$AgpDecorated has been deprecated. Starting with Gradle 10, this property will no longer be treated like a property. The combination of method name and return type is not consistent with Java Bean property rules. Add a method named 'getCrunchPngs' with the same behavior and mark the old one with @Deprecated, or change the type of 'com.android.build.gradle.internal.dsl.BuildType$AgpDecorated.isCrunchPngs' (and the setter) to 'boolean'. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_boolean_properties
+Declaring 'useProguard' as a property using an 'is-' method with a Boolean type on com.android.build.gradle.internal.dsl.BuildType has been deprecated. Starting with Gradle 10, this property will no longer be treated like a property. The combination of method name and return type is not consistent with Java Bean property rules. Add a method named 'getUseProguard' with the same behavior and mark the old one with @Deprecated, or change the type of 'com.android.build.gradle.internal.dsl.BuildType.isUseProguard' (and the setter) to 'boolean'. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_boolean_properties
+Build file '/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle': line 7
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:7)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9vnv5tjpnrq4iufl6ar265sdw.run(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:6)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle': line 8
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10. Use assignment ('compileSdk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:8)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9vnv5tjpnrq4iufl6ar265sdw.run(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:6)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle': line 12
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10. Use assignment ('minSdk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1$_closure3.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:12)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:10)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle': line 13
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10. Use assignment ('targetSdk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1$_closure3.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:13)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:10)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle': line 35
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10. Use assignment ('viewBinding = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1$_closure7.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:35)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:34)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle': line 36
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10. Use assignment ('buildConfig = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1$_closure7.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:36)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9vnv5tjpnrq4iufl6ar265sdw$_run_closure1.doCall$original(/data/data/com.termux/files/home/android-gemini-agent/app/build.gradle:34)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Declaring 'wearAppUnbundled' as a property using an 'is-' method with a Boolean type on com.android.build.api.variant.impl.ApplicationVariantImpl has been deprecated. Starting with Gradle 10, this property will no longer be treated like a property. The combination of method name and return type is not consistent with Java Bean property rules. Add a method named 'getWearAppUnbundled' with the same behavior and mark the old one with @Deprecated, or change the type of 'com.android.build.api.variant.impl.ApplicationVariantImpl.isWearAppUnbundled' (and the setter) to 'boolean'. Consult the upgrading guide for further information: https://docs.gradle.org/9.0.0/userguide/upgrading_version_8.html#groovy_boolean_
+> Task :ap
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErro> Task :app> Task :app:dataBindingMergeDependencyArtifactsDebug
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:g> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:mergeDebugResources
+> Task :app:dataBindingGenBaseClassesDebug
+> Task :app:javaPreCompileDebug
+> Task :app:mergeDebugShaders
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:processDebugManifestForPackage
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
+> Task :app:desugarDebugFileDependencies
+> Task :app:mergeDebugJniLibFolders
+> Task :app:checkDebugDuplicateClasses
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:mergeLibDexDebug
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:processDebugResources
+> Task :app:mergeExtDexDebug
+> Task :app:compileDebugKotlin
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:18:25 Syntax error: Expecting member declaration.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:18:32 Syntax error: Expecting member declaration.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:18:34 Syntax error: Expecting member declaration.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:28:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:29:9 None of the following candidates is applicable:
+fun setContentView(@LayoutRes() p0: Int): Unit
+fun setContentView(p0: View!): Unit
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:29:24 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:42:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:43:24 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:62:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:66:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:101:21 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:113:13 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:122:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:133:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:134:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:135:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:136:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:145:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:146:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:147:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:148:9 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:161:26 Unresolved reference 'binding'.
+e: file:///data/data/com.termux/files/home/android-gemini-agent/app/src/main/java/com/gemini/agent/ui/MainActivity.kt:164:9 Unresolved reference 'binding'.
+
+> Task :app:compileDebugKotlin FAILED
+
+[Incubating] Problems report is available at: file:///data/data/com.termux/files/home/android-gemini-agent/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (Powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2m 46s
+29 actionable tasks: 21 executed, 8 up-to-date
+BuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+    	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
+    	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:44)
+    	at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
+    	at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
+    	at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
+    	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:50)
+    	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:28)
+    	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:68)
+    	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:38)
+    	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:61)
+    	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:26)
+    	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:69)
+    	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:46)
+    	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:39)
+    	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:28)
+    	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
+    	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$1(BuildCacheStep.java:75)
+    	at org.gradle.internal.Either$Right.fold(Either.java:176)
+    	at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
+    	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:73)
+    	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:48)
+    	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:46)
+    	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
+    	at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
+    	at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
+    	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+    	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
+    	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
+    	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
+    	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:27)
+    	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:49)
+    	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:27)
+    	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:71)
+    	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:39)
+    	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:64)
+    	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:35)
+    	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:62)
+    	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:40)
+    	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:76)
+    	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:45)
+    	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkStep.java:136)
+    	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:61)
+    	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:38)
+    	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStartedStep.java:38)
+    	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36)
+    	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23)
+    	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
+    	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
+    	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:35)
+    	at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:297)
+    	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
+    	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
+    	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
+    	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
+    	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
+    	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+    	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
+    	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
+    	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
+    	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
+    	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:47)
+    	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:34)
+    	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:64)
+    	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:132)
+    	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:121)
+    	at org.gradle.api.internal.tasks.execution.ProblemsTaskPathTrackingTaskExecuter.execute(ProblemsTaskPathTrackingTaskExecuter.java:41)
+    	at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+    	at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+    	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+    	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+    	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+    	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+    	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+    	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+    	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+    	at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:45)
+    	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:347)
+    	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:334)
+    	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:330)
+    	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+    	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:330)
+    	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:319)
+    	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+    	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+    	at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)
+    	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:144)
+    	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:129)
+    	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+    	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
+    	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
+    	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+    	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+    	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
+    	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
+    	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+    	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+    	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:45)
+    	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+    	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+    	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+    	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+    	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+    	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+    	at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+    	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
+    	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+    	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
+    	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+    	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+    	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+    	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+    	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+    	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+    	at java.base/java.lang.Thread.run(Thread.java:1583)
+    
+
+> Task :app:packageDebugResources
+> Task :app:generateDebugBuildConfig
+> Task :app:parseDebugLocalResources
+> Task :app:mapDebugSourceSetPaths
+> Task :app:checkDebugAarMetadata
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:processDebugMainManifest
+> Task :app:mergeDebugResources FAILED
+> Task :app:processDebugManifest
+
+[Incubating] Problems report is available at: file:///data/data/com.termux/files/home/android-gemini-agent/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:mergeDebugResources'.
+> /data/data/com.termux/files/home/android-gemini-agent/app/src/main/res/layout/activity_main.xml: Error: /data/data/com.termux/files/home/android-gemini-agent/app/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir/layout/activity_main.xml
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (Powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 27s
+13 actionable tasks: 11 executed, 2 up-to-date

@@ -1,0 +1,50 @@
+name: Build Release APK
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Create local.properties
+      run: |
+        echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > local.properties
+        echo "sdk.dir=/usr/local/lib/android/sdk" >> local.properties
+
+    - name: Build Release APK
+      run: ./gradlew assembleRelease --stacktrace
+
+    - name: Sign APK (if keystore provided)
+      if: ${{ secrets.KEYSTORE_FILE != '' }}
+      run: |
+        echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > keystore.jks
+        jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+          -keystore keystore.jks \
+          -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+          -keypass "${{ secrets.KEY_PASSWORD }}" \
+          app/build/outputs/apk/release/app-release-unsigned.apk \
+          "${{ secrets.KEY_ALIAS }}"
+
+    - name: Upload Release APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release
+        path: app/build/outputs/apk/release/*.apk
+        retention-days: 90

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gemini Agent</string>
+    <string name="accessibility_service_description">Gemini AI Agent uses accessibility services to automate UI tasks based on natural language commands. It can tap, type, and navigate apps on your behalf.</string>
+    <string name="enter_task">Enter your task...</string>
+    <string name="start_agent">Start Agent</string>
+    <string name="stop_agent">Stop Agent</string>
+    <string name="status_idle">Idle</string>
+    <string name="status_running">Running...</string>
+    <string name="enable_accessibility">Enable Accessibility Service</string>
+    <string name="accessibility_disabled">Please enable the Gemini Agent accessibility service in Settings</string>
+    <string name="api_key_missing">Gemini API key not configured</string>
+</resources>
