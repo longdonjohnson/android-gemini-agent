@@ -30,28 +30,13 @@ class GeminiAgentService : AccessibilityService() {
 
     companion object {
         private const val TAG = "GeminiAgentService"
-        private const val EXTRA_TASK = "task"
-        private const val ACTION_START_TASK = "START_TASK"
-        private const val ACTION_STOP_TASK = "STOP_TASK"
-        
-        private var instance: GeminiAgentService? = null
-
-        fun startTask(context: Context, task: String) {
-            val intent = Intent(context, GeminiAgentService::class.java).apply {
-                action = ACTION_START_TASK
-                putExtra(EXTRA_TASK, task)
-            }
-            instance?.onStartCommand(intent, 0, 0)
-        }
-
-        fun stopTask(context: Context) {
-            instance?.stopCurrentTask()
-        }
+        const val EXTRA_TASK = "task"
+        const val ACTION_START_TASK = "START_TASK"
+        const val ACTION_STOP_TASK = "STOP_TASK"
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
         geminiClient = GeminiClient(applicationContext)
         getScreenDimensions()
         Log.d(TAG, "Service created")

@@ -85,6 +85,54 @@ class GeminiClient(private val context: Context) {
                     )
                 )
             )))
+
+            add("tools", gson.toJsonTree(listOf(
+                mapOf(
+                    "function_declarations" to listOf(
+                        mapOf(
+                            "name" to "perform_action",
+                            "description" to "Performs a UI action on the device",
+                            "parameters" to mapOf(
+                                "type" to "object",
+                                "properties" to mapOf(
+                                    "action" to mapOf(
+                                        "type" to "string",
+                                        "description" to "The action to perform"
+                                    ),
+                                    "x" to mapOf(
+                                        "type" to "integer",
+                                        "description" to "The x-coordinate"
+                                    ),
+                                    "y" to mapOf(
+                                        "type" to "integer",
+                                        "description" to "The y-coordinate"
+                                    ),
+                                    "text" to mapOf(
+                                        "type" to "string",
+                                        "description" to "The text to type"
+                                    ),
+                                    "direction" to mapOf(
+                                        "type" to "string",
+                                        "description" to "The direction to scroll"
+                                    ),
+                                    "duration" to mapOf(
+                                        "type" to "integer",
+                                        "description" to "The duration to wait"
+                                    ),
+                                    "complete" to mapOf(
+                                        "type" to "boolean",
+                                        "description" to "Whether the task is complete"
+                                    ),
+                                    "message" to mapOf(
+                                        "type" to "string",
+                                        "description" to "A message to the user"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )))
             
             add("generationConfig", JsonObject().apply {
                 addProperty("temperature", 0.1)
@@ -116,30 +164,18 @@ class GeminiClient(private val context: Context) {
             val content = candidates[0].asJsonObject
                 .getAsJsonObject("content")
             val parts = content.getAsJsonArray("parts")
-            val text = parts[0].asJsonObject.get("text").asString
-
-            Log.d(TAG, "Model response: $text")
-
-            // Extract JSON from response
-            val jsonStart = text.indexOf("{")
-            val jsonEnd = text.lastIndexOf("}") + 1
-            if (jsonStart == -1 || jsonEnd == 0) {
-                Log.e(TAG, "No JSON found in response")
-                return createDefaultAction()
-            }
-
-            val jsonStr = text.substring(jsonStart, jsonEnd)
-            val actionJson = gson.fromJson(jsonStr, JsonObject::class.java)
+            val functionCall = parts[0].asJsonObject.getAsJsonObject("functionCall")
+            val args = functionCall.getAsJsonObject("args")
 
             return UIAction(
-                type = actionJson.get("action")?.asString ?: "wait",
-                x = denormalizeCoord(actionJson.get("x")?.asInt ?: 0, 1080),
-                y = denormalizeCoord(actionJson.get("y")?.asInt ?: 0, 2400),
-                text = actionJson.get("text")?.asString,
-                direction = actionJson.get("direction")?.asString,
-                duration = actionJson.get("duration")?.asLong ?: 2000,
-                isComplete = actionJson.get("complete")?.asBoolean ?: false,
-                message = actionJson.get("message")?.asString
+                type = args.get("action")?.asString ?: "wait",
+                x = denormalizeCoord(args.get("x")?.asInt ?: 0, 1080),
+                y = denormalizeCoord(args.get("y")?.asInt ?: 0, 2400),
+                text = args.get("text")?.asString,
+                direction = args.get("direction")?.asString,
+                duration = args.get("duration")?.asLong ?: 2000,
+                isComplete = args.get("complete")?.asBoolean ?: false,
+                message = args.get("message")?.asString
             )
         } catch (e: Exception) {
             Log.e(TAG, "Error parsing response", e)

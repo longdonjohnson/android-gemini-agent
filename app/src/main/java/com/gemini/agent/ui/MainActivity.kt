@@ -137,7 +137,11 @@ class MainActivity : AppCompatActivity() {
 
         addLog("Starting agent with task: $task")
         
-        GeminiAgentService.startTask(this, task)
+        val intent = Intent(this, GeminiAgentService::class.java).apply {
+            action = GeminiAgentService.ACTION_START_TASK
+            putExtra(GeminiAgentService.EXTRA_TASK, task)
+        }
+        startService(intent)
     }
 
     private fun stopAgent() {
@@ -149,7 +153,10 @@ class MainActivity : AppCompatActivity() {
 
         addLog("Stopping agent")
         
-        GeminiAgentService.stopTask(this)
+        val intent = Intent(this, GeminiAgentService::class.java).apply {
+            action = GeminiAgentService.ACTION_STOP_TASK
+        }
+        startService(intent)
     }
 
     private fun openAccessibilitySettings() {
