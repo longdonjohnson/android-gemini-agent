@@ -1,11 +1,12 @@
 plugins {
     id 'org.jetbrains.kotlin.android'
+    id 'com.android.internal.version-check'
 }
 
 android {
     namespace 'com.gemini.agent'
     compileSdk 34
-
+}
     defaultConfig {
         applicationId "com.gemini.agent"
         minSdk 26
