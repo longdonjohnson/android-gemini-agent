@@ -6,7 +6,9 @@ import android.util.Base64
 import android.util.Log
 import com.gemini.agent.models.UIAction
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.google.gson.JsonObject
+import com.google.gson.JsonArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.*
@@ -19,6 +21,88 @@ class GeminiClient(private val context: Context) {
     
     private val client = OkHttpClient()
     private val gson = Gson()
+    private val toolDefinition: JsonObject by lazy {
+        // Define the Computer Use tool functions as a JSON object
+        // This is a simplified version of the full Computer Use toolset for the Android agent
+        val clickAt = JsonObject().apply {
+            addProperty("name", "click_at")
+            addProperty("description", "Clicks at a specific coordinate on the screen. The x and y values are based on a 1000x1000 grid and are scaled to the screen dimensions.")
+            add("parameters", JsonObject().apply {
+                addProperty("type", "object")
+                add("properties", JsonObject().apply {
+                    add("x", JsonObject().apply { addProperty("type", "integer"); addProperty("description", "The x-coordinate (0-999) of the click position.") })
+                    add("y", JsonObject().apply { addProperty("type", "integer"); addProperty("description", "The y-coordinate (0-999) of the click position.") })
+                })
+                add("required", JsonArray().apply { add("x"); add("y") })
+            })
+        }
+
+        val typeTextAt = JsonObject().apply {
+            addProperty("name", "type_text_at")
+            addProperty("description", "Types text at a specific coordinate. x and y are based on a 1000x1000 grid.")
+            add("parameters", JsonObject().apply {
+                addProperty("type", "object")
+                add("properties", JsonObject().apply {
+                    add("x", JsonObject().apply { addProperty("type", "integer"); addProperty("description", "The x-coordinate (0-999) of the text field.") })
+                    add("y", JsonObject().apply { addProperty("type", "integer"); addProperty("description", "The y-coordinate (0-999) of the text field.") })
+                    add("text", JsonObject().apply { addProperty("type", "string"); addProperty("description", "The text to input into the field.") })
+                })
+                add("required", JsonArray().apply { add("x"); add("y"); add("text") })
+            })
+        }
+
+        val scrollDocument = JsonObject().apply {
+            addProperty("name", "scroll_document")
+            addProperty("description", "Scrolls the entire screen or current view in a specified direction.")
+            add("parameters", JsonObject().apply {
+                addProperty("type", "object")
+                add("properties", JsonObject().apply {
+                    add("direction", JsonObject().apply { addProperty("type", "string"); addProperty("description", "The direction to scroll: 'up', 'down', 'left', or 'right'.") })
+                })
+                add("required", JsonArray().apply { add("direction") })
+            })
+        }
+
+        val goBack = JsonObject().apply {
+            addProperty("name", "go_back")
+            addProperty("description", "Navigates to the previous screen or page.")
+            add("parameters", JsonObject().apply { addProperty("type", "object"); add("properties", JsonObject()) })
+        }
+
+        val search = JsonObject().apply {
+            addProperty("name", "search")
+            addProperty("description", "Navigates to the default search engine's homepage. Useful for starting a new search task.")
+            add("parameters", JsonObject().apply { addProperty("type", "object"); add("properties", JsonObject()) })
+        }
+
+        val navigate = JsonObject().apply {
+            addProperty("name", "navigate")
+            addProperty("description", "Navigates the browser directly to the specified URL.")
+            add("parameters", JsonObject().apply {
+                addProperty("type", "object")
+                add("properties", JsonObject().apply {
+                    add("url", JsonObject().apply { addProperty("type", "string"); addProperty("description", "The URL to navigate to.") })
+                })
+                add("required", JsonArray().apply { add("url") })
+            })
+        }
+
+        // The final tools structure
+        JsonObject().apply {
+            add("tools", JsonArray().apply {
+                add(JsonObject().apply {
+                    add("functionDeclarations", JsonArray().apply {
+                        add(clickAt)
+                        add(typeTextAt)
+                        add(scrollDocument)
+                        add(goBack)
+                        add(search)
+                        add(navigate)
+                    })
+                })
+            })
+        }
+    }
     
     private fun getApiKey(): String {
         val prefs = context.getSharedPreferences("GeminiAgentPrefs", Context.MODE_PRIVATE)
@@ -43,7 +127,7 @@ class GeminiClient(private val context: Context) {
                 }
 
                 val responseBody = response.body?.string()
-                Log.d(TAG, "Response: $responseBody")
+                Log.d(TAG, "Raw Response: $responseBody")
 
                 parseResponse(responseBody)
             } catch (e: Exception) {
@@ -57,17 +141,9 @@ class GeminiClient(private val context: Context) {
         val imageBase64 = bitmapToBase64(screenshot)
         
         val prompt = if (isFirstTurn) {
-            "You are an Android automation agent. Execute this task: $task\n\n" +
-            "Available actions:\n" +
-            "- tap(x, y): Tap at coordinates\n" +
-            "- type(text): Type text\n" +
-            "- scroll(direction): Scroll up or down\n" +
-            "- wait(ms): Wait\n" +
-            "- back(): Press back\n" +
-            "- home(): Go home\n\n" +
-            "Respond in JSON format: {\"action\": \"tap|type|scroll|wait|back|home\", \"x\": 0-999, \"y\": 0-999, \"text\": \"...\", \"direction\": \"up|down\", \"duration\": 0, \"complete\": false, \"message\": \"...\"}"
+            "You are an Android automation agent. Execute this task: $task. Use the provided tools to interact with the screen."
         } else {
-            "Continue the task. What's the next action?"
+            "Continue the task. What's the next action? Use the provided tools to interact with the screen."
         }
 
         val requestBody = JsonObject().apply {
@@ -90,6 +166,8 @@ class GeminiClient(private val context: Context) {
                 addProperty("temperature", 0.1)
                 addProperty("maxOutputTokens", 1000)
             })
+            // Add the tool definition to the request
+            add("tools", toolDefinition.getAsJsonArray("tools"))
         }
 
         val body = requestBody.toString()
@@ -113,34 +191,63 @@ class GeminiClient(private val context: Context) {
                 return null
             }
 
-            val content = candidates[0].asJsonObject
-                .getAsJsonObject("content")
-            val parts = content.getAsJsonArray("parts")
-            val text = parts[0].asJsonObject.get("text").asString
+            val content = candidates[0].asJsonObject.getAsJsonObject("content")
+            val functionCalls = content.getAsJsonArray("functionCalls")
 
-            Log.d(TAG, "Model response: $text")
-
-            // Extract JSON from response
-            val jsonStart = text.indexOf("{")
-            val jsonEnd = text.lastIndexOf("}") + 1
-            if (jsonStart == -1 || jsonEnd == 0) {
-                Log.e(TAG, "No JSON found in response")
+            if (functionCalls == null || functionCalls.size() == 0) {
+                // Check for a text response, which indicates the task is complete or model has a message
+                val parts = content.getAsJsonArray("parts")
+                val text = parts?.get(0)?.asJsonObject?.get("text")?.asString
+                
+                if (text != null) {
+                    Log.d(TAG, "Model response (text): $text")
+                    // If the model provides a text response, it likely means the task is complete
+                    return UIAction(
+                        type = "wait", // Use wait as a safe default action
+                        duration = 500,
+                        isComplete = true,
+                        message = text
+                    )
+                }
+                
+                Log.e(TAG, "No function calls or text in response")
                 return createDefaultAction()
             }
 
-            val jsonStr = text.substring(jsonStart, jsonEnd)
-            val actionJson = gson.fromJson(jsonStr, JsonObject::class.java)
+            val firstCall = functionCalls[0].asJsonObject
+            val functionName = firstCall.get("name").asString
+            val args = firstCall.getAsJsonObject("args")
+            
+            Log.d(TAG, "Model response (function): $functionName with args: $args")
 
-            return UIAction(
-                type = actionJson.get("action")?.asString ?: "wait",
-                x = denormalizeCoord(actionJson.get("x")?.asInt ?: 0, 1080),
-                y = denormalizeCoord(actionJson.get("y")?.asInt ?: 0, 2400),
-                text = actionJson.get("text")?.asString,
-                direction = actionJson.get("direction")?.asString,
-                duration = actionJson.get("duration")?.asLong ?: 2000,
-                isComplete = actionJson.get("complete")?.asBoolean ?: false,
-                message = actionJson.get("message")?.asString
-            )
+            // Map the official function call to the internal UIAction model
+            return when (functionName) {
+                "click_at" -> UIAction(
+                    type = "tap",
+                    x = denormalizeCoord(args.get("x")?.asInt ?: 0, 1080),
+                    y = denormalizeCoord(args.get("y")?.asInt ?: 0, 2400)
+                )
+                "type_text_at" -> UIAction(
+                    type = "type",
+                    x = denormalizeCoord(args.get("x")?.asInt ?: 0, 1080),
+                    y = denormalizeCoord(args.get("y")?.asInt ?: 0, 2400),
+                    text = args.get("text")?.asString
+                )
+                "scroll_document" -> UIAction(
+                    type = "scroll",
+                    direction = args.get("direction")?.asString
+                )
+                "go_back" -> UIAction(type = "back")
+                "search" -> UIAction(type = "home") // Map 'search' to 'home' for simplicity in this agent
+                "navigate" -> UIAction(
+                    type = "navigate",
+                    text = args.get("url")?.asString // Use 'text' field to pass the URL
+                )
+                else -> {
+                    Log.e(TAG, "Unknown function call: $functionName")
+                    createDefaultAction()
+                }
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Error parsing response", e)
             return createDefaultAction()
