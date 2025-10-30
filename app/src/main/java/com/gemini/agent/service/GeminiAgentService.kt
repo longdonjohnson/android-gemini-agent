@@ -34,24 +34,24 @@ class GeminiAgentService : AccessibilityService() {
         private const val ACTION_START_TASK = "START_TASK"
         private const val ACTION_STOP_TASK = "STOP_TASK"
         
-        private var instance: GeminiAgentService? = null
-
         fun startTask(context: Context, task: String) {
             val intent = Intent(context, GeminiAgentService::class.java).apply {
                 action = ACTION_START_TASK
                 putExtra(EXTRA_TASK, task)
             }
-            instance?.onStartCommand(intent, 0, 0)
+            context.startService(intent)
         }
 
         fun stopTask(context: Context) {
-            instance?.stopCurrentTask()
+            val intent = Intent(context, GeminiAgentService::class.java).apply {
+                action = ACTION_STOP_TASK
+            }
+            context.startService(intent)
         }
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
         geminiClient = GeminiClient(applicationContext)
         getScreenDimensions()
         Log.d(TAG, "Service created")
@@ -88,7 +88,6 @@ class GeminiAgentService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        instance = null
         scope.cancel()
         Log.d(TAG, "Service destroyed")
     }
