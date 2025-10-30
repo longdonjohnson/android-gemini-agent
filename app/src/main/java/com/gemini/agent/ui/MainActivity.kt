@@ -15,7 +15,7 @@ import com.gemini.agent.utils.AccessibilityUtils
 
 class MainActivity : AppCompatActivity() {
     
-    private lateinit in binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private var isAgentRunning = false
 
     companion object {
