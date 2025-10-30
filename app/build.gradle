@@ -1,7 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.android'
-    id 'com.android.internal.version-check'
-    id 'com.android.app'
+    id 'com.android.application'
 }
 
 android {
