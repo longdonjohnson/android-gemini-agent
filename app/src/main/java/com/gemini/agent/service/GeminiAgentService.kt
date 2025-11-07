@@ -30,10 +30,15 @@ class GeminiAgentService : AccessibilityService() {
 
     companion object {
         private const val TAG = "GeminiAgentService"
+        const val ACTION_UPDATE_LOG = "com.gemini.agent.service.UPDATE_LOG"
+        const val EXTRA_LOG_MESSAGE = "log_message"
+        const val ACTION_AGENT_STATUS = "com.gemini.agent.service.AGENT_STATUS"
+        const val EXTRA_AGENT_RUNNING = "agent_running"
+
         private const val EXTRA_TASK = "task"
         private const val ACTION_START_TASK = "START_TASK"
         private const val ACTION_STOP_TASK = "STOP_TASK"
-        
+
         fun startTask(context: Context, task: String) {
             val intent = Intent(context, GeminiAgentService::class.java).apply {
                 action = ACTION_START_TASK
@@ -92,6 +97,23 @@ class GeminiAgentService : AccessibilityService() {
         Log.d(TAG, "Service destroyed")
     }
 
+    private fun sendLog(message: String) {
+        Log.d(TAG, message) // Keep logging to logcat for debugging
+        val intent = Intent(ACTION_UPDATE_LOG).apply {
+            putExtra(EXTRA_LOG_MESSAGE, message)
+            setPackage(packageName)
+        }
+        sendBroadcast(intent)
+    }
+
+    private fun sendStatus(isRunning: Boolean) {
+        val intent = Intent(ACTION_AGENT_STATUS).apply {
+            putExtra(EXTRA_AGENT_RUNNING, isRunning)
+            setPackage(packageName)
+        }
+        sendBroadcast(intent)
+    }
+
     private fun getScreenDimensions() {
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val displayMetrics = DisplayMetrics()
@@ -103,13 +125,14 @@ class GeminiAgentService : AccessibilityService() {
 
     private fun startAgentTask(task: String) {
         if (isTaskRunning) {
-            Log.w(TAG, "Task already running")
+            sendLog("Task already running")
             return
         }
 
         currentTask = task
         isTaskRunning = true
-        Log.d(TAG, "Starting task: $task")
+        sendLog("Starting task: $task")
+        sendStatus(true)
 
         scope.launch {
             runAgentLoop(task)
@@ -117,9 +140,12 @@ class GeminiAgentService : AccessibilityService() {
     }
 
     private fun stopCurrentTask() {
-        isTaskRunning = false
-        currentTask = null
-        Log.d(TAG, "Task stopped")
+        if (isTaskRunning) {
+            isTaskRunning = false
+            currentTask = null
+            sendLog("Task stopped")
+            sendStatus(false)
+        }
     }
 
     private suspend fun runAgentLoop(task: String) {
@@ -129,35 +155,36 @@ class GeminiAgentService : AccessibilityService() {
         try {
             while (isTaskRunning && turnCount < maxTurns) {
                 turnCount++
-                Log.d(TAG, "Agent turn $turnCount")
+                sendLog("Agent turn $turnCount")
 
                 // Capture screenshot
                 val screenshot = captureScreenshot()
                 if (screenshot == null) {
-                    Log.e(TAG, "Failed to capture screenshot")
+                    sendLog("Failed to capture screenshot")
                     delay(2000)
                     continue
                 }
 
                 // Get action from Gemini
+                sendLog("Getting next action from Gemini...")
                 val action = geminiClient?.getNextAction(task, screenshot, turnCount == 1)
                 if (action == null) {
-                    Log.e(TAG, "Failed to get action from Gemini")
+                    sendLog("Failed to get action from Gemini")
                     delay(2000)
                     continue
                 }
 
-                Log.d(TAG, "Action: ${action.type}")
+                sendLog("Action: ${action.type}")
 
                 // Execute action
                 val success = executeAction(action)
                 if (!success) {
-                    Log.e(TAG, "Failed to execute action")
+                    sendLog("Failed to execute action")
                 }
 
                 // Check if task is complete
                 if (action.isComplete) {
-                    Log.d(TAG, "Task completed: ${action.message}")
+                    sendLog("Task completed: ${action.message}")
                     stopCurrentTask()
                     break
                 }
@@ -167,11 +194,11 @@ class GeminiAgentService : AccessibilityService() {
             }
 
             if (turnCount >= maxTurns) {
-                Log.w(TAG, "Max turns reached")
+                sendLog("Max turns reached")
                 stopCurrentTask()
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Error in agent loop", e)
+            sendLog("Error in agent loop: ${e.message}")
             stopCurrentTask()
         }
     }
