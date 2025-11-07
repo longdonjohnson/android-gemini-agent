@@ -1,22 +1,42 @@
 package com.gemini.agent.ui
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.gemini.agent.R
 import com.gemini.agent.databinding.ActivityMainBinding
 import com.gemini.agent.service.GeminiAgentService
 import com.gemini.agent.utils.AccessibilityUtils
 
 class MainActivity : AppCompatActivity() {
-    
+
     private lateinit var binding: ActivityMainBinding
     private var isAgentRunning = false
+
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when (intent.action) {
+                GeminiAgentService.ACTION_UPDATE_LOG -> {
+                    val message = intent.getStringExtra(GeminiAgentService.EXTRA_LOG_MESSAGE)
+                    if (message != null) {
+                        addLog(message)
+                    }
+                }
+                GeminiAgentService.ACTION_AGENT_STATUS -> {
+                    val isRunning = intent.getBooleanExtra(GeminiAgentService.EXTRA_AGENT_RUNNING, false)
+                    updateUIForAgentStatus(isRunning)
+                }
+            }
+        }
+    }
 
     companion object {
         private const val PREFS_NAME = "GeminiAgentPrefs"
@@ -36,6 +56,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateAccessibilityStatus()
+        val intentFilter = IntentFilter().apply {
+            addAction(GeminiAgentService.ACTION_UPDATE_LOG)
+            addAction(GeminiAgentService.ACTION_AGENT_STATUS)
+        }
+        ContextCompat.registerReceiver(this, receiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(receiver)
     }
 
     private fun setupUI() {
@@ -129,26 +159,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startAgent(task: String) {
-        isAgentRunning = true
-        binding.statusText.text = getString(R.string.status_running)
-        binding.startButton.isEnabled = false
-        binding.stopButton.isEnabled = true
-        binding.taskInput.isEnabled = false
-
-        addLog("Starting agent with task: $task")
-        
+        addLog("Attempting to start agent with task: $task")
         GeminiAgentService.startTask(this, task)
     }
 
-    private fun stopAgent() {
-        isAgentRunning = false
-        binding.statusText.text = getString(R.string.status_idle)
-        binding.startButton.isEnabled = true
-        binding.stopButton.isEnabled = false
-        binding.taskInput.isEnabled = true
+    private fun updateUIForAgentStatus(isRunning: Boolean) {
+        isAgentRunning = isRunning
+        binding.statusText.text = if (isRunning) getString(R.string.status_running) else getString(R.string.status_idle)
+        binding.startButton.isEnabled = !isRunning
+        binding.stopButton.isEnabled = isRunning
+        binding.taskInput.isEnabled = !isRunning
+    }
 
-        addLog("Stopping agent")
-        
+    private fun stopAgent() {
+        addLog("Attempting to stop agent")
         GeminiAgentService.stopTask(this)
     }
 
