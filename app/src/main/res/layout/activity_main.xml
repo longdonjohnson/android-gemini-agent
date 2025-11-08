@@ -73,6 +73,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/stopButton" />
 
+    <Button
+        android:id="@+id/copyLogsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Copy Logs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enableAccessibilityButton" />
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -80,7 +90,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enableAccessibilityButton">
+        app:layout_constraintTop_toBottomOf="@id/copyLogsButton">
 
         <TextView
             android:id="@+id/logText"
@@ -88,7 +98,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="Logs will appear here..."
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textIsSelectable="true" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

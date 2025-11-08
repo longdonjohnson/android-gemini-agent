@@ -169,9 +169,16 @@ class GeminiAgentService : AccessibilityService() {
                 sendLog("Getting next action from Gemini...")
                 val action = geminiClient?.getNextAction(task, screenshot, turnCount == 1)
                 if (action == null) {
-                    sendLog("Failed to get action from Gemini")
+                    sendLog("Failed to get action from Gemini (null response)")
                     delay(2000)
                     continue
+                }
+
+                // Check for API or client errors
+                if (action.type == "error") {
+                    sendLog("Stopping due to error: ${action.message}")
+                    stopCurrentTask()
+                    break
                 }
 
                 sendLog("Action: ${action.type}")
