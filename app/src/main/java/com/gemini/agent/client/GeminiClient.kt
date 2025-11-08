@@ -122,8 +122,13 @@ class GeminiClient(private val context: Context) {
                 val response = client.newCall(request).execute()
 
                 if (!response.isSuccessful) {
-                    Log.e(TAG, "API request failed: ${response.code}")
-                    return@withContext null
+                    val errorBody = response.body?.string() ?: "Unknown error"
+                    Log.e(TAG, "API request failed: ${response.code} - $errorBody")
+                    // Return a special UIAction to indicate the error
+                    return@withContext UIAction(
+                        type = "error",
+                        message = "API Error: ${response.code} - $errorBody"
+                    )
                 }
 
                 val responseBody = response.body?.string()
@@ -132,7 +137,10 @@ class GeminiClient(private val context: Context) {
                 parseResponse(responseBody)
             } catch (e: Exception) {
                 Log.e(TAG, "Error calling Gemini API", e)
-                null
+                return@withContext UIAction(
+                    type = "error",
+                    message = "Client Error: ${e.message}"
+                )
             }
         }
     }

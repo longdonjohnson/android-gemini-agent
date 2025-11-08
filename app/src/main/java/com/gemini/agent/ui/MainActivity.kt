@@ -1,6 +1,8 @@
 package com.gemini.agent.ui
 
 import android.content.BroadcastReceiver
+import android.content.ClipboardManager
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -95,6 +97,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.enableAccessibilityButton.setOnClickListener {
             openAccessibilitySettings()
+        }
+
+        binding.copyLogsButton.setOnClickListener {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Gemini Agent Logs", binding.logText.text)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(this, "Logs copied to clipboard", Toast.LENGTH_SHORT).show()
         }
     }
 
